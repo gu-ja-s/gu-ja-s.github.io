@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditory Matching 4</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100vh;
+            margin: 0;
+            background-color: white;
+        }
+        .button {
+            width: 9cm;
+            height: 8cm;
+            background-image: url("https://raw.github.com/gu-ja-s/Auditory-Matching/main/blue.png");
+            background-size: cover;
+            border: none;
+            cursor: pointer;
+            margin: 0.2cm;
+        }
+        .bottom-buttons {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .arrow-button {
+            width: 0.75cm;
+            height: 0.75cm;
+            background-color: gray;
+            border: none;
+            cursor: pointer;
+            margin: 0.2cm;
+            font-size: 20px;
+        }
+        .page-number {
+            font-size: 24px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bottom-buttons">
+        <button class="button" id="bottomButton1"></button>
+        <button class="button" id="bottomButton2"></button>
+        <button class="button" id="bottomButton3"></button>
+    </div>
+
+    <button class="button" id="topButton"></button>
+
+    <div>
+        <button class="arrow-button" id="prevPage">◀</button>
+        <span class="page-number" id="currentPageNumber">1</span>
+        <button class="arrow-button" id="nextPage">▶</button>
+    </div>
+
+    <script>
+        const pages = [
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/dog1.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/dog1.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/trumpet.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/water.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/cat.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/thee.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/clap.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/cat.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/car.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/car.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/water.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/thee.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/dog1.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/trumpet.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/dog1.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/clap.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/baby.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/thee.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/baby.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/water.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/cat.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/clap.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/trumpet.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/cat.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/car.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/car.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/thee.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/clap.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/baby.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/trumpet.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/thee.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/baby.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/cat.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/water.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/cat.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/trumpet.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/dog1.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/clap.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/water.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/dog1.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/car.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/trumpet.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/car.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/thee.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/baby.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/baby.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/water.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/clap.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/dog1.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/thee.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/dog1.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/trumpet.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/cat.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/cat.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/trumpet.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/water.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/baby.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/clap.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/baby.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/thee.wav"
+                ]
+            },
+            {
+                topSound: "https://raw.github.com/gu-ja-s/Auditory-Matching/main/car.wav",
+                bottomSounds: [
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/clap.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/water.wav",
+                    "https://raw.github.com/gu-ja-s/Auditory-Matching/main/car.wav"
+                ]
+            }
+        ];
+
+        let currentPage = 0;
+
+        function playSound(url) {
+            const audio = new Audio(url);
+            audio.play();
+        }
+
+        function updatePage() {
+            const current = pages[currentPage];
+            document.getElementById('topButton').onclick = () => playSound(current.topSound);
+            document.getElementById('bottomButton1').onclick = () => playSound(current.bottomSounds[0]);
+            document.getElementById('bottomButton2').onclick = () => playSound(current.bottomSounds[1]);
+            document.getElementById('bottomButton3').onclick = () => playSound(current.bottomSounds[2]);
+            document.getElementById('currentPageNumber').textContent = currentPage + 1; // 페이지 번호 업데이트
+        }
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                updatePage();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                updatePage();
+            }
+        });
+
+        // 초기 페이지 설정
+        updatePage();
+    </script>
+</body>
+</html>
